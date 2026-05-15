@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, ArrowLeft } from "lucide-react";
 import loginBg from "../assest/images/loginbg.jpg";
 import loginLogo from "../assest/images/logincontent.png";
 import CommonButton from "../components/CommonButton";
@@ -57,9 +57,16 @@ export default function Reset() {
           alt="login logo"
           className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[200px] sm:w-[447px]"
         />
+          <p className="text-center text-sm text-black absolute top-2 left-2 bg-white rounded-[4px] px-3 py-1 flex items-center gap-2">
+            <ArrowLeft size={14}/>
+            Back to{' '}
+            <span onClick={() => nav("/")} className="cursor-pointer text-[#C86F40] font-semibold">
+              Login
+            </span>
+          </p>
       </div>
 
-      <div className="lg:w-[40%] lg:h-svh lg:overflow-auto flex items-center py-10 lg:pb-0">
+      <div className="lg:w-[40%] lg:h-svh lg:overflow-auto flex items-center py-10 lg:py-0">
         <div className="w-full max-w-[490px] mx-auto space-y-6 px-6">
           <h1 className="text-center text-3xl font-bold text-[#C86F40] mb-20">Set New Password</h1>
           <div className="space-y-2">
@@ -128,9 +135,11 @@ export default function Reset() {
                 Minimum 8 characters, max 20 characters.
               </span>
             </div>
-            <div className="font-semibold text-slate-900">Complexity:</div>
-            <p className="mt-2 text-slate-500">Must include at least one of each:</p>
-            <ul className="mt-3 space-y-2 pl-5">
+            <div className="flex gap-2 items-center">
+              <div className="font-semibold text-slate-900">Complexity:</div>
+            <p className="text-slate-500">Must include at least one of each:</p>
+            </div>
+            <ul className="mt-3 space-y-2">
               <li className={uppercaseValid ? 'text-emerald-600' : 'text-slate-500'}>
                 • Uppercase Letter (A–Z)
               </li>

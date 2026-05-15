@@ -1,5 +1,5 @@
 
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   Grid,
   MapPin,
@@ -17,17 +17,17 @@ import {
 import logoSvg from "../assest/images/logo.svg";
 
 const navItems = [
-  { label: "Dashboard", icon: Grid, active: true },
-  { label: "Branches", icon: MapPin },
-  { label: "Reservations", icon: Calendar },
-  { label: "Orders", icon: ShoppingCart },
-  { label: "Offers", icon: Gift },
-  { label: "Users", icon: Users },
-  { label: "About Us", icon: Info },
-  { label: "Terms & Conditions", icon: FileText },
-  { label: "FAQ's", icon: HelpCircle },
-  { label: "Refer & Earn", icon: DollarSign },
-  { label: "Reviews", icon: Star },
+  { label: "Dashboard", icon: Grid, path: "/dashboard" },
+  { label: "Branches", icon: MapPin, path: "/branches" },
+  { label: "Reservations", icon: Calendar, path: "/reservations" },
+  { label: "Orders", icon: ShoppingCart, path: "/orders" },
+  { label: "Offers", icon: Gift, path: "/offers" },
+  { label: "Users", icon: Users, path: "/users" },
+  { label: "About Us", icon: Info, path: "/about-us" },
+  { label: "Terms & Conditions", icon: FileText, path: "/terms" },
+  { label: "FAQ's", icon: HelpCircle, path: "/faqs" },
+  { label: "Refer & Earn", icon: DollarSign, path: "/refer" },
+  { label: "Reviews", icon: Star, path: "/reviews" },
 ];
 
 export default function Sidebar() {
@@ -42,32 +42,32 @@ export default function Sidebar() {
     <aside className="w-[280px] h-screen overflow-auto border-r border-slate-200 bg-white">
       <div className="px-6 py-8 flex flex-col justify-between h-full">
         <div>
-
           <div className="">
-          <img src={logoSvg} alt="Salt Cafe Logo" className="h-14 w-auto mx-auto" />
-        </div>
+            <img src={logoSvg} alt="Salt Cafe Logo" className="h-14 w-auto mx-auto" />
+          </div>
 
-        <nav className="mt-8 space-y-2 h-[calc(100vh-255px)] overflow-auto">
-          {navItems.map((item) => {
-            const Icon = item.icon;
-            return (
-              <button
-                key={item.label}
-                type="button"
-                className={`w-full flex items-center gap-3 rounded-3xl px-4 py-3 text-left transition ${
-                  item.active
-                    ? "bg-[#f5d8c0] text-[#b64f0f]"
-                    : "text-slate-700 hover:bg-slate-50"
-                }`}
-              >
-                <span className="inline-flex h-9 w-9 items-center justify-center rounded-2xl bg-[#f8e6d8] text-base">
-                  <Icon className="h-5 w-5" />
-                </span>
-                <span className="text-sm font-medium">{item.label}</span>
-              </button>
-            );
-          })}
-        </nav>
+          <nav className="mt-8 space-y-2 h-[calc(100vh-255px)] overflow-auto scroll-hide">
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <NavLink
+                  key={item.label}
+                  to={item.path}
+                  end={item.path === "/dashboard"}
+                  className={({ isActive }) =>
+                    `w-full flex items-center gap-1 rounded-lg px-2 py-2 text-left transition ${
+                      isActive ? "bg-[#C86F40] text-[#fff]" : "text-slate-700 hover:bg-slate-50"
+                    }`
+                  }
+                >
+                  <span className="inline-flex h-9 w-9 items-center justify-center text-base">
+                    <Icon className="h-5 w-5" />
+                  </span>
+                  <span className="text-sm font-medium">{item.label}</span>
+                </NavLink>
+              );
+            })}
+          </nav>
         </div>
 
         <div className="mt-8 pt-6 border-t border-slate-200">

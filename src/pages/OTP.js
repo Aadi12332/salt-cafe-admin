@@ -90,7 +90,7 @@ export default function OTP() {
         />
       </div>
 
-      <div className="lg:w-[40%] lg:h-svh lg:overflow-auto flex items-center py-10 lg:pb-0">
+      <div className="lg:w-[40%] lg:h-svh lg:overflow-auto flex items-center py-10 lg:py-0">
         <div className="w-full max-w-[490px] mx-auto space-y-6 px-6">
           <h1 className="text-center text-3xl font-bold text-[#C86F40] mb-20">OTP Verification</h1>
           <div className="space-y-2">
@@ -116,7 +116,7 @@ export default function OTP() {
                 value={digit}
                 onChange={(e) => handleOtpChange(e.target.value, index)}
                 onKeyDown={(e) => handleKeyDown(e, index)}
-                className="h-14 w-full rounded-xl border border-slate-300 bg-white text-center text-xl font-semibold focus:border-[#C86F40] focus:outline-none focus:ring-2 focus:ring-[#C86F40]/30"
+                className="h-14 w-full rounded-lg border border-slate-300 bg-white text-center text-xl font-semibold focus:border-[#C86F40] focus:outline-none focus:ring-2 focus:ring-[#C86F40]/30"
               />
             ))}
           </div>
