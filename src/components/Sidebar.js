@@ -39,7 +39,7 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="w-[280px] h-screen overflow-auto border-r border-slate-200 bg-white">
+    <aside className="min-w-[300px] h-screen overflow-auto border-r border-slate-200 bg-white">
       <div className="px-6 py-8 flex flex-col justify-between h-full">
         <div>
           <div className="">
