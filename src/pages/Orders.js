@@ -231,14 +231,14 @@ export default function Orders() {
       {!showDetails ? (
         <div className="flex flex-col justify-between z-10 relative">
           <div>
-            <div className="flex items-center justify-between gap-5">
+            <div className="flex items-center justify-between gap-5 flex-wrap">
               <div className="flex items-center gap-6">
                 <h1 className="text-[22px] leading-none font-semibold text-black">
                   Orders
                 </h1>
                 <p className="font-medium">Total Orders: 230</p>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 flex-wrap">
                 <div className="flex h-12 items-center gap-2 border border-[#CFCFCF] rounded-lg px-2 bg-white py-2">
                   <Search size={18} className="text-[#C86F40]" />
                   <input
@@ -264,7 +264,7 @@ export default function Orders() {
               </div>
             </div>
 
-            <div className="mt-5 z-10 overflow-x-auto h-[calc(100vh-255px)] w-[calc(100vw-340px)] scroll-hide bg-white rounded-lg">
+            <div className="mt-5 z-10 overflow-x-auto h-[calc(100vh-255px)] lg:w-[calc(100vw-340px)] w-[calc(100vw-40px)] scroll-hide bg-white rounded-lg">
               <table className="w-full min-w-[1700px] border-separate border-spacing-0 overflow-hidden rounded-lg">
                 <thead>
                   <tr className="bg-[#C86F40]">
@@ -404,7 +404,7 @@ export default function Orders() {
 
           <div className="mt-8 rounded-xl border border-[#D9D9D9] bg-white shadow-sm">
             <div className="relative p-5">
-              <div className="absolute right-14 top-[-25px] h-[50px] min-w-[240px] rounded-lg bg-[#14A344] shadow-lg flex items-center justify-center">
+              <div className="sm:absolute sm:right-14 sm:top-[-25px] h-[50px] sm:min-w-[240px] w-fit px-5 rounded-lg bg-[#14A344] shadow-lg flex items-center justify-center">
                 <p className="text-white text-[16px] font-bold">
                   Status : Booked
                 </p>
@@ -413,19 +413,19 @@ export default function Orders() {
               {!isEditable && (
                 <button
                   onClick={() => setIsEditable(true)}
-                  className="absolute right-14 top-16 text-[#C86F40]"
+                  className="absolute sm:right-14 right-5 top-5 sm:top-16 text-[#C86F40]"
                 >
                   <PenSquare size={42} />
                 </button>
               )}
 
-              <div className="w-[400px] h-[60px] rounded-tr-[2rem] bg-[#C86F40] flex items-center px-14">
+              <div className="lg:w-[400px]  min-w-[200px] w-fit h-[60px] rounded-tr-[2rem] bg-[#C86F40] flex items-center px-14">
                 <h2 className="text-white text-[24px] font-bold">
                   Reservation Details
                 </h2>
               </div>
 
-              <div className="grid grid-cols-2 gap-6 pt-14">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-14">
                 <div>
                   <label className="text-[16px] font-medium text-[#2B2B2B]">
                     Reserved By
@@ -554,13 +554,13 @@ export default function Orders() {
               </div>
 
               <div className="mt-12">
-                <div className="w-[400px] h-[60px] rounded-tr-[2rem] bg-[#C86F40] flex items-center px-14">
+                <div className="lg:w-[400px] min-w-[200px] w-fit h-[60px] rounded-tr-[2rem] bg-[#C86F40] flex items-center px-14">
                   <h2 className="text-white text-[24px] font-bold">
                     Hotel Details
                   </h2>
                 </div>
 
-                <div className="grid grid-cols-2 gap-6 pt-14">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-14">
                   <div>
                     <label className="text-[16px] font-medium text-[#2B2B2B]">
                       Hotel Name
@@ -590,7 +590,7 @@ export default function Orders() {
                   Address
                 </h2>
 
-                <div className="grid grid-cols-2 gap-6 pt-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-8">
                   <div>
                     <label className="text-[16px] font-medium text-[#2B2B2B]">
                       Street Address
@@ -663,10 +663,10 @@ export default function Orders() {
         maxWidth="max-w-6xl"
       >
         {selectedOrder && (
-          <div className="-mx-5 -mb-5 px-10 pb-10">
+          <div className="-mx-5 -mb-5 px-5 pb-10">
             <div className="relative pt-14">
               <div
-                className={`absolute left-1/2 -translate-x-1/2 -top-5 h-[60px] min-w-[320px] rounded-b-[28px] shadow-lg flex items-center justify-center px-10 ${
+                className={`absolute left-1/2 -translate-x-1/2 -top-5 h-[60px] min-w-[280px] rounded-b-[28px] shadow-lg flex items-center justify-center px-10 ${
                   selectedOrder.status === "In-Progress"
                     ? "bg-[#0B22D6]"
                     : "bg-[#00B533]"
@@ -677,8 +677,9 @@ export default function Orders() {
                 </p>
               </div>
 
-              <div className="grid grid-cols-[1fr_320px] gap-14">
+              <div>
                 <div className="space-y-5">
+                  <div className="grid md:grid-cols-[1fr_300px] md:gap-10 gap-5">
                   <div className="space-y-5">
                     <div className="flex items-center">
                       <h3 className="text-[#9E4718] text-[16px] font-bold mr-2">
@@ -700,7 +701,7 @@ export default function Orders() {
                       </p>
                     </div>
 
-                    <div className="flex items-center gap-16">
+                    <div className="flex items-center lg:gap-16 gap-4 flex-wrap">
                       <div className="flex items-center">
                         <h3 className="text-[#9E4718] text-[16px] font-bold mr-2">
                           Quantity:
@@ -772,8 +773,19 @@ export default function Orders() {
                       </p>
                     </div>
                   </div>
+  <img
+                    src={
+                      selectedOrder.orderId === "ORD224"
+                        ? "https://images.unsplash.com/photo-1642517342422-1e4f5f2f7b5e?q=80&w=1200&auto=format&fit=crop"
+                        : "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1200&auto=format&fit=crop"
+                    }
+                    alt=""
+                    className="w-full h-[280px] rounded-lg object-cover shadow-lg"
+                  />
 
-                  <div className="grid grid-cols-2 gap-8 pt-5">
+                  </div>
+
+                  <div className="grid sm:grid-cols-2 grid-cols-1 gap-8 pt-5">
                     <div className="relative rounded-xl bg-[#FFF4EC] shadow-[0px_4px_10px_0px_#00000025] p-5 pt-10">
                       <div className="absolute left-8 -top-5 h-[40px] px-5 rounded-lg bg-[#C86F40] shadow-lg flex items-center justify-center">
                         <p className="text-white text-[16px] font-bold">
@@ -842,18 +854,6 @@ export default function Orders() {
                       </div>
                     </div>
                   </div>
-                </div>
-
-                <div className="pt-12">
-                  <img
-                    src={
-                      selectedOrder.orderId === "ORD224"
-                        ? "https://images.unsplash.com/photo-1642517342422-1e4f5f2f7b5e?q=80&w=1200&auto=format&fit=crop"
-                        : "https://images.unsplash.com/photo-1513104890138-7c749659a591?q=80&w=1200&auto=format&fit=crop"
-                    }
-                    alt=""
-                    className="w-full h-[360px] rounded-lg object-cover shadow-lg"
-                  />
                 </div>
               </div>
             </div>

@@ -1,4 +1,3 @@
-
 import { NavLink, useNavigate } from "react-router-dom";
 import {
   Grid,
@@ -30,7 +29,7 @@ const navItems = [
   { label: "Reviews", icon: Star, path: "/reviews" },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ open, onClose }) {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -39,11 +38,20 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="min-w-[300px] h-screen overflow-auto border-r border-slate-200 bg-white">
+    <aside
+      className={`fixed inset-y-0 left-0 z-50 w-[300px] h-screen overflow-auto border-r border-slate-200 bg-white shadow-xl transition-transform duration-300 lg:static lg:translate-x-0 lg:shadow-none ${
+        open ? "translate-x-0" : "-translate-x-full"
+      }`}
+    >
       <div className="px-6 py-8 flex flex-col justify-between h-full">
+
         <div>
           <div className="">
-            <img src={logoSvg} alt="Salt Cafe Logo" className="h-14 w-auto mx-auto" />
+            <img
+              src={logoSvg}
+              alt="Salt Cafe Logo"
+              className="h-14 w-auto mx-auto"
+            />
           </div>
 
           <nav className="mt-8 space-y-2 h-[calc(100vh-255px)] overflow-auto scroll-hide">
@@ -56,7 +64,9 @@ export default function Sidebar() {
                   end={item.path === "/dashboard"}
                   className={({ isActive }) =>
                     `w-full flex items-center gap-1 rounded-lg px-2 py-2 text-left transition ${
-                      isActive ? "bg-[#C86F40] text-[#fff]" : "text-slate-700 hover:bg-slate-50"
+                      isActive
+                        ? "bg-[#C86F40] text-[#fff]"
+                        : "text-slate-700 hover:bg-slate-50"
                     }`
                   }
                 >

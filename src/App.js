@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import Sidebar from "./components/Sidebar";
 import Header from "./components/Header";
@@ -19,19 +20,30 @@ import Reviews from "./pages/Reviews";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import PublicRoute from "./routes/PublicRoute";
 import AdminProfile from "./pages/AdminProfile";
+import AddUser from "./pages/AddUser";
 
 function ProtectedLayout() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-[#f8f2ed]">
       <div className="flex">
-        <Sidebar />
-        <div className="flex-1">
-          <Header />
+        <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+        <div className="flex-1 min-w-0">
+          <Header onToggleSidebar={() => setSidebarOpen((value) => !value)} />
+
           <main className="px-5 py-5 h-[calc(100vh-85px)] overflow-auto scroll-hide">
             <Outlet />
           </main>
         </div>
       </div>
+
+      <div
+        className={`fixed inset-0 bg-black/40 z-40 lg:hidden transition-opacity duration-300 ${
+          sidebarOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={() => setSidebarOpen(false)}
+      />
     </div>
   );
 }
@@ -57,6 +69,10 @@ export default function App() {
             <Route path="orders" element={<Orders />} />
             <Route path="offers" element={<Offers />} />
             <Route path="users" element={<UsersPage />} />
+            <Route
+  path="add-user"
+  element={<AddUser />}
+/>
             <Route path="about-us" element={<AboutUs />} />
             <Route path="terms" element={<TermsConditions />} />
             <Route path="faqs" element={<FAQs />} />

@@ -151,7 +151,7 @@ export default function Branches() {
             boxShadow: "4px 8px 15px 0px #BDBDBD30",
           }}
         >
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid sm:grid-cols-2 grid-cols-1 gap-5">
             <div>
               <label className="text-[16px] font-semibold text-[#2D2D2D]">
                 Branch Name
@@ -280,7 +280,7 @@ export default function Branches() {
             Branch Address
           </h2>
 
-          <div className="grid grid-cols-2 gap-6 mt-6">
+          <div className="grid sm:grid-cols-2 grid-cols-1 gap-5 mt-6">
             <div>
               <label className="text-[16px] font-semibold text-[#2D2D2D]">
                 Street Address
@@ -358,7 +358,7 @@ export default function Branches() {
             Other
           </h2>
 
-          <div className="grid grid-cols-2 gap-6 mt-6">
+          <div className="grid sm:grid-cols-2 grid-cols-1 gap-5 mt-6">
             <div>
               <label className="text-[16px] font-semibold text-[#2D2D2D]">
                 Food Type:
@@ -418,12 +418,12 @@ export default function Branches() {
             Branch & Menu Images
           </h2>
 
-          <div className="grid grid-cols-3 gap-5 mt-8">
+          <div className="grid sm:grid-cols-3 grid-cols-1 gap-5 mt-8">
             {images.map((item, index) => (
               <label
                 key={index}
                 className={`relative border-[4px] border-dashed border-[#C86F40] rounded-xl overflow-hidden flex items-center justify-center cursor-pointer ${
-                  index === 0 ? "row-span-2" : "h-[180px]"
+                  index === 0 ? "row-span-2 min-h-[180px]" : "h-[180px]"
                 }`}
               >
                 <input
@@ -496,7 +496,7 @@ export default function Branches() {
         Here listed are the hotel branches
       </p>
 
-      <div className="grid grid-cols-3 gap-5 mt-2">
+      <div className="grid xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-5 mt-2">
         {branches.map((item) => (
           <div
             key={item.id}
@@ -583,7 +583,7 @@ export default function Branches() {
               Branch & Menu Images:
             </h2>
 
-            <div className="grid grid-cols-3 gap-4 mt-5">
+            <div className="grid grid-cols-3 sm:gap-4 gap-2 mt-5">
 
               <img
                 src={selectedBranch.image || "https://via.placeholder.com/1200x800?text=No+Image"}
@@ -633,19 +633,19 @@ export default function Branches() {
 
           <div className="pt-14">
 
-            <div className="grid grid-cols-[210px_1fr_40px] gap-y-9 items-start">
+            <div className="grid sm:grid-cols-[200px_1fr] grid-cols-1 sm:gap-y-9 gap-2 items-start relative">
 
               <h3 className="text-[#6B2600] text-[18px] font-bold">
                 Branch Name:
               </h3>
 
-              <p className="text-[#C86F40] text-[18px] leading-[38px]">
+              <p className="text-[#C86F40] text-[18px] mb-3 leading-[38px]">
                 The Salt Cafe,
                 Sector-104 Noida
               </p>
 
               <button
-                className="text-[#9E4718] mt-1"
+                className="text-[#9E4718] mt-1 absolute right-0 top-[-40px]"
                 onClick={() => {
                   setViewModal(false);
                   handleEditBranch(selectedBranch);
@@ -658,74 +658,67 @@ export default function Branches() {
                 Branch Address:
               </h3>
 
-              <p className="text-[#C86F40] text-[18px] leading-[38px]">
+              <p className="text-[#C86F40] text-[18px] mb-3 leading-[38px]">
                 43 Subash Lane, near
                 Shakthi Peeth sector
                 104 , Noida - New Delhi
               </p>
 
-              <div />
 
               <h3 className="text-[#6B2600] text-[18px] font-bold">
                 Branch Manager:
               </h3>
 
-              <p className="text-[#C86F40] text-[18px]">
+              <p className="text-[#C86F40] text-[18px] mb-3">
                 Rohith Genny
               </p>
 
-              <div />
 
               <h3 className="text-[#6B2600] text-[18px] font-bold">
                 Seating Capacity:
               </h3>
 
-              <p className="text-[#C86F40] text-[18px]">
+              <p className="text-[#C86F40] text-[18px] mb-3">
                 230
               </p>
 
-              <div />
 
               <h3 className="text-[#6B2600] text-[18px] font-bold">
                 Branch Timings:
               </h3>
 
-              <p className="text-[#C86F40] text-[18px]">
+              <p className="text-[#C86F40] text-[18px] mb-3">
                 10:00 AM to 11:00PM
               </p>
 
-              <div />
 
               <h3 className="text-[#6B2600] text-[18px] font-bold">
                 Food Type:
               </h3>
 
-              <p className="text-[#C86F40] text-[18px]">
+              <p className="text-[#C86F40] text-[18px] mb-3">
                 Veg & Non-Veg
               </p>
 
-              <div />
 
               <h3 className="text-[#6B2600] text-[18px] font-bold">
                 Cuisine Type:
               </h3>
 
-              <p className="text-[#C86F40] text-[18px]">
+              <p className="text-[#C86F40] text-[18px] mb-3">
                 Both
               </p>
 
-              <div />
 
               <h3 className="text-[#6B2600] text-[18px] font-bold leading-[36px]">
                 Buffet Option
                 Available:
               </h3>
 
-              <p className="text-[#C86F40] text-[18px] mt-1">
+              <p className="text-[#C86F40] text-[18px] mb-3 mt-1">
                 Yes
               </p>
 
-              <div />
 
             </div>
 

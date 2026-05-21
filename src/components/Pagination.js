@@ -15,7 +15,7 @@ export default function Pagination({
   const pages = [1, 2, 3];
 
   return (
-    <div className="flex items-center justify-between flex-wrap gap-5">
+    <div className="flex items-center sm:justify-between justify-center flex-wrap gap-5">
 
       <p className="text-[16px] font-semibold text-[#2B2B2B]">
         Showing {startEntry} to {endEntry} of{" "}
@@ -36,7 +36,6 @@ export default function Pagination({
           }`}
         >
           <ChevronLeft size={20} />
-          Previous
         </button>
 
         {pages.map((page) => (
@@ -85,7 +84,6 @@ export default function Pagination({
               : "text-[#C86F40]"
           }`}
         >
-          Next
           <ChevronRight size={20} />
         </button>
 

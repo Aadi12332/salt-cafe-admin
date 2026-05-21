@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   Users,
   ShoppingBag,
@@ -55,7 +56,7 @@ const statsCards = [
   },
 ];
 
-const users = [
+const initialUsers = [
   {
     name: "Jakob John",
     date: "12/05/2025",
@@ -84,6 +85,10 @@ const users = [
 
 export default function DashboardHome() {
   const navigate = useNavigate();
+  const [users, setUsers] = useState(initialUsers);
+  const handleDelete = (index) => {
+    setUsers((prev) => prev.filter((_, i) => i !== index));
+  };
   const option = {
     tooltip: {
       trigger: "axis",
@@ -155,7 +160,7 @@ export default function DashboardHome() {
       <div className="grid grid-cols-12 gap-5">
         <div className="col-span-12 xl:col-span-6">
           <div
-            className="rounded-xl p-5 relative overflow-hidden"
+            className="rounded-xl md:p-5 p-3 relative overflow-hidden"
             style={{
               background: "linear-gradient(90deg, #F7B086 0%, #B74B00 100%)",
               boxShadow: "4px 8px 15px 0px #BDBDBD30",
@@ -170,11 +175,11 @@ export default function DashboardHome() {
                 360
               </h2>
 
-              <div className="flex gap-5 mt-6">
+              <div className="flex md:gap-5 gap-2 mt-6">
                 {usersStats.map((item, index) => (
                   <div
                     key={index}
-                    className="bg-white/70 backdrop-blur-md rounded-xl p-5 w-[180px]"
+                    className="bg-white/70 backdrop-blur-md rounded-xl md:p-5 p-3 w-[180px]"
                     style={{
                       boxShadow: "4px 8px 15px 0px #BDBDBD30",
                     }}
@@ -212,7 +217,7 @@ export default function DashboardHome() {
             <img src={cardBg} alt="card background" className="w-[250px] absolute right-0 -bottom-2.5" />
           </div>
 
-          <div className="grid grid-cols-3 gap-5 mt-5">
+          <div className="flex flex-wrap md:gap-5 gap-2 mt-5">
             {statsCards.map((item, index) => {
               const Icon = item.icon;
 
@@ -220,7 +225,7 @@ export default function DashboardHome() {
                 <div
                   key={index}
                   onClick={() => navigate(item.path)}
-                  className="bg-white border border-[#E7A57F] rounded-xl p-5 cursor-pointer"
+                  className="bg-white border flex-1 min-w-[150px] border-[#E7A57F] rounded-xl md:p-5 p-3 cursor-pointer"
                   style={{
                     boxShadow: "4px 8px 15px 0px #BDBDBD30",
                   }}
@@ -250,15 +255,15 @@ export default function DashboardHome() {
               boxShadow: "4px 8px 15px 0px #BDBDBD30",
             }}
           >
-            <div className="px-5 py-2 border-b border-[#E7A57F]">
+            <div className="md:px-5 px-3 py-2 border-b border-[#E7A57F]">
               <h2 className="text-[20px] font-semibold">New Users</h2>
             </div>
 
             <div className="overflow-x-auto">
-              <table className="w-full">
+              <table className="w-full min-w-[600px]">
                 <thead>
                   <tr className="border-b border-[#E7A57F]">
-                    <th className="text-left text-[#A9A9A9] font-medium text-xs pl-5 pr-2 py-3">
+                    <th className="text-left text-[#A9A9A9] font-medium text-xs md:pl-5 pl-3 pr-2 py-3">
                       User Name
                     </th>
 
@@ -286,7 +291,7 @@ export default function DashboardHome() {
                       key={index}
                       className="hover:bg-[#FFF8F4] transition-all duration-200"
                     >
-                      <td className="pl-5 pr-2 py-3 text-xs font-semibold text-[#1C1C1C]">
+                      <td className="md:pl-5 pl-3 pr-2 py-3 text-xs font-semibold text-[#1C1C1C]">
                         {user.name}
                       </td>
 
@@ -308,13 +313,27 @@ export default function DashboardHome() {
                             <Pencil size={14} className="text-[#9A9A9A]" />
                           </button>
 
-                          <button className="w-6 h-6 rounded-lg bg-[#FFF1F1] flex items-center justify-center hover:bg-[#FFDADA] transition-all">
+                          <button
+                            type="button"
+                            onClick={() => handleDelete(index)}
+                            className="w-6 h-6 rounded-lg bg-[#FFF1F1] flex items-center justify-center hover:bg-[#FFDADA] transition-all"
+                          >
                             <Trash2 size={14} className="text-[#FF5B5B]" />
                           </button>
                         </div>
                       </td>
                     </tr>
                   ))}
+                  {users.length === 0 && (
+                    <tr>
+                      <td
+                        colSpan={5}
+                        className="text-center py-5 text-[#9A9A9A] font-medium"
+                      >
+                        No users found.
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>

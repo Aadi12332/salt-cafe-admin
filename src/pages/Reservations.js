@@ -247,7 +247,7 @@ export default function Reservations() {
 
           <div>
 
-            <div className="flex items-center justify-between gap-5">
+            <div className="flex items-center justify-between gap-5 flex-wrap">
 
               <h1 className="text-[22px] leading-none font-semibold text-black">
                 Bookings / Reservations
@@ -272,7 +272,7 @@ export default function Reservations() {
 
             </div>
 
-            <div className="mt-5 z-10 overflow-x-auto h-[calc(100vh-255px)] w-[calc(100vw-340px)] scroll-hide bg-white rounded-lg">
+            <div className="mt-5 z-10 overflow-x-auto h-[calc(100vh-255px)] lg:w-[calc(100vw-340px)] w-[calc(100vw-40px)] scroll-hide bg-white rounded-lg">
 
               <table className="z-10 w-full min-w-[2000px] border-separate border-spacing-0 overflow-hidden rounded-lg">
 
@@ -500,7 +500,7 @@ export default function Reservations() {
 
             <div className="relative p-5">
 
-              <div className="absolute right-14 top-[-25px] h-[50px] min-w-[240px] rounded-lg bg-[#14A344] shadow-lg flex items-center justify-center">
+              <div className="sm:absolute sm:right-14 sm:top-[-25px] h-[50px] sm:min-w-[240px] w-fit px-5 rounded-lg bg-[#14A344] shadow-lg flex items-center justify-center">
 
                 <p className="text-white text-[18px] font-bold">
                   Status : Booked
@@ -515,7 +515,7 @@ export default function Reservations() {
                       true
                     )
                   }
-                  className="absolute right-14 top-16 text-[#C86F40]"
+                  className="absolute sm:right-14 right-5 sm:top-16 top-5 text-[#C86F40]"
                 >
                   <PenSquare
                     size={42}
@@ -523,7 +523,7 @@ export default function Reservations() {
                 </button>
               )}
 
-              <div className="w-[400px] h-[60px] rounded-tr-[2rem] bg-[#C86F40] flex items-center px-14">
+              <div className="lg:w-[400px] min-w-[200px] w-fit h-[60px] mt-5 sm:mt-0 rounded-tr-[2rem] bg-[#C86F40] flex items-center px-14">
 
                 <h2 className="text-white text-[24px] font-bold">
                   Reservation Details
@@ -531,7 +531,7 @@ export default function Reservations() {
 
               </div>
 
-              <div className="grid grid-cols-2 gap-6 pt-14">
+              <div className="grid-cols-1 sm:grid-cols-2 gap-5 grid pt-14">
 
                 <div>
 
@@ -729,7 +729,7 @@ export default function Reservations() {
 
               <div className="mt-12">
 
-                <div className="w-[400px] h-[60px] rounded-tr-[2rem] bg-[#C86F40] flex items-center px-14">
+                <div className="lg:w-[400px] min-w-[200px] w-fit h-[60px] rounded-tr-[2rem] bg-[#C86F40] flex items-center px-14">
 
                   <h2 className="text-white text-[24px] font-bold">
                     Hotel Details
@@ -737,7 +737,7 @@ export default function Reservations() {
 
                 </div>
 
-                <div className="grid grid-cols-2 gap-6 pt-14">
+                <div className="grid-cols-1 sm:grid-cols-2 gap-5 grid pt-14">
 
                   <div>
 
@@ -777,7 +777,7 @@ export default function Reservations() {
                   Address
                 </h2>
 
-                <div className="grid grid-cols-2 gap-6 pt-8">
+                <div className="grid-cols-1 sm:grid-cols-2 gap-5 grid pt-8">
 
                   <div>
 

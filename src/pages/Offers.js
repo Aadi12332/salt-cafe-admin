@@ -169,7 +169,7 @@ export default function Offers() {
 
           </div>
 
-          <div className="mt-5 overflow-x-auto h-[calc(100vh-255px)] w-[calc(100vw-340px)] scroll-hide bg-white rounded-lg">
+          <div className="mt-5 overflow-x-auto h-[calc(100vh-255px)] lg:w-[calc(100vw-340px)] w-[calc(100vw-40px)] scroll-hide bg-white rounded-lg">
 
             <table className="w-full min-w-[1700px] border-separate border-spacing-0 overflow-hidden rounded-lg">
 

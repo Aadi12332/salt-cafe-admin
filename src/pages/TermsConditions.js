@@ -153,7 +153,7 @@ export default function TermsConditions() {
 
   return (
     <div>
-      <div className="flex items-center justify-between gap-5">
+      <div className="flex items-center justify-between gap-5 flex-wrap">
         <h1 className="text-[22px] font-semibold text-black">
           Terms & Conditions
         </h1>

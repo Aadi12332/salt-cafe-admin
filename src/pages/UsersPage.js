@@ -6,7 +6,9 @@ import {
 import foodPlate from "../assest/images/dashboard2.png";
 
 import { useMemo, useState } from "react";
-
+import {
+  useNavigate,
+} from "react-router-dom";
 import Pagination from "../components/Pagination";
 
 const initialUsers = [
@@ -158,6 +160,10 @@ const tabs = [
 export default function UsersPage() {
   const [page, setPage] = useState(1);
 
+
+const navigate =
+  useNavigate();
+
   const [activeTab, setActiveTab] =
     useState("New Users");
 
@@ -210,7 +216,9 @@ export default function UsersPage() {
               Users
             </h1>
 
-            <button className="h-12 px-5 rounded-lg border border-[#CFCFCF] flex items-center gap-3 text-[#9E4718] text-[16px] font-semibold bg-white">
+            <button   onClick={() =>
+    navigate("/add-user")
+  } className="h-12 px-5 rounded-lg border border-[#CFCFCF] flex items-center gap-3 text-[#9E4718] text-[16px] font-semibold bg-white">
               <UserPlus size={18} />
               Add New User
             </button>
@@ -264,7 +272,7 @@ export default function UsersPage() {
 
         </div>
 
-        <div className="mt-5 overflow-x-auto h-[calc(100vh-310px)] scroll-hide bg-white rounded-lg w-[calc(100vw-340px)]">
+        <div className="mt-5 overflow-x-auto h-[calc(100vh-310px)] scroll-hide bg-white rounded-lg lg:w-[calc(100vw-340px)] w-[calc(100vw-40px)]">
 
           <table className="border-separate border-spacing-0 overflow-hidden rounded-lg">
 
@@ -346,11 +354,20 @@ export default function UsersPage() {
 
                       <div className="flex items-center justify-center gap-6">
 
-                        <button className="text-[#C86F40]">
+                        <button
+                          type="button"
+                          onClick={() =>
+                            navigate("/add-user", {
+                              state: { user: item },
+                            })
+                          }
+                          className="text-[#C86F40]"
+                        >
                           <Eye size={24} />
                         </button>
 
                         <button
+                          type="button"
                           onClick={() =>
                             handleDelete(
                               item.id

@@ -138,7 +138,7 @@ export default function ReferAndEarn() {
         </div>
 
         <div className="mt-5 overflow-x-auto h-[calc(100vh-255px)] scroll-hide bg-white rounded-lg">
-          <table className="w-full border-separate border-spacing-0 overflow-hidden rounded-lg">
+          <table className="w-full border-separate border-spacing-0 overflow-hidden rounded-lg min-w-[1000px]">
             <thead>
               <tr className="bg-[#C86F40]">
                 <th className="text-left text-white text-[16px] font-bold px-5 py-[22px] uppercase rounded-tl-lg">
