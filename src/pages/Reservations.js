@@ -10,6 +10,7 @@ import { useState } from "react";
 import Pagination from "../components/Pagination";
 import CommonButton from "../components/CommonButton";
 import foodPlate from "../assest/images/dashboard2.png";
+import CommonModal from "../components/CommonModal";
 
 const initialReservations = [
   {
@@ -185,28 +186,43 @@ const initialReservations = [
 export default function Reservations() {
   const [page, setPage] = useState(1);
 
-  const [reservations, setReservations] = useState(
-    initialReservations
-  );
+  const [reservations, setReservations] = useState(initialReservations);
 
-  const [showActive, setShowActive] =
-    useState(false);
+  const [slotModal, setSlotModal] = useState(false);
 
-  const [selectedReservation, setSelectedReservation] =
-    useState(null);
+  const slotOptions = ["Breakfast", "Lunch", "Dinner"];
 
-  const [showDetails, setShowDetails] =
-    useState(false);
+  const [slotTimeModal, setSlotTimeModal] = useState(false);
 
-  const [isEditable, setIsEditable] =
-    useState(false);
+  const [selectedSlot, setSelectedSlot] = useState("");
+
+  const timeSlots = [
+    {
+      title: "Breakfast",
+      slots: ["10:00AM", "11:00AM", "12:00AM"],
+    },
+    {
+      title: "Lunch",
+      slots: ["01:00PM", "02:00PM", "03:00PM", "04:00PM"],
+    },
+    {
+      title: "Dinner",
+      slots: ["09:00PM", "10:00PM", "11:00PM", "12:00PM"],
+    },
+  ];
+
+  const [showActive, setShowActive] = useState(false);
+
+  const [selectedReservation, setSelectedReservation] = useState(null);
+
+  const [showDetails, setShowDetails] = useState(false);
+
+  const [isEditable, setIsEditable] = useState(false);
 
   const [formData, setFormData] = useState({});
 
   const handleDelete = (id) => {
-    setReservations((prev) =>
-      prev.filter((item) => item.id !== id)
-    );
+    setReservations((prev) => prev.filter((item) => item.id !== id));
   };
 
   const handleView = (item) => {
@@ -214,8 +230,7 @@ export default function Reservations() {
 
     setFormData({
       ...item,
-      hotelName:
-        "The Salt Cafe, Sector-104 Noida",
+      hotelName: "The Salt Cafe, Sector-104 Noida",
       manager: "Rohith Genny",
       street: "Street Name",
       city: "Landmark, City,",
@@ -228,35 +243,39 @@ export default function Reservations() {
     setIsEditable(false);
   };
 
-  const handleChange = (
-    field,
-    value
-  ) => {
-    setFormData({
-      ...formData,
+  const handleChange = (field, value) => {
+    if (field === "reservedOn") {
+      const today = new Date().toISOString().split("T")[0];
+
+      if (value < today) {
+        return;
+      }
+    }
+
+    setFormData((prev) => ({
+      ...prev,
       [field]: value,
-    });
+    }));
   };
 
   return (
     <div className="relative">
-      <img src={foodPlate} alt="card background" className="w-[150px] absolute right-0 -top-10 z-[0] rotate-20 opacity-50" />
+      <img
+        src={foodPlate}
+        alt="card background"
+        className="w-[150px] absolute right-0 -top-10 z-[0] rotate-20 opacity-50"
+      />
 
       {!showDetails ? (
         <div className="flex flex-col justify-between z-10 relative">
-
           <div>
-
             <div className="flex items-center justify-between gap-5 flex-wrap">
-
               <h1 className="text-[22px] leading-none font-semibold text-black">
                 Bookings / Reservations
               </h1>
 
               <button
-                onClick={() =>
-                  setShowActive((s) => !s)
-                }
+                onClick={() => setShowActive((s) => !s)}
                 className={`h-12 px-5 z-10 rounded-lg border border-[#CFCFCF] flex items-center gap-3 text-[16px] font-semibold ${
                   showActive
                     ? "bg-[#C86F40] text-white"
@@ -265,21 +284,14 @@ export default function Reservations() {
               >
                 <Calendar size={18} />
 
-                {showActive
-                  ? "Showing: Booked"
-                  : "Active Reservations"}
+                {showActive ? "Showing: Booked" : "Active Reservations"}
               </button>
-
             </div>
 
             <div className="mt-5 z-10 overflow-x-auto h-[calc(100vh-255px)] lg:w-[calc(100vw-340px)] w-[calc(100vw-40px)] scroll-hide bg-white rounded-lg">
-
               <table className="z-10 w-full min-w-[2000px] border-separate border-spacing-0 overflow-hidden rounded-lg">
-
                 <thead>
-
                   <tr className="bg-[#C86F40]">
-
                     <th className="text-left text-white text-[16px] font-bold px-5 py-[20px] uppercase rounded-tl-lg">
                       Reserved By
                     </th>
@@ -327,24 +339,15 @@ export default function Reservations() {
                     <th className="text-center text-white text-[16px] font-bold px-5 py-[20px] uppercase rounded-tr-lg">
                       Action
                     </th>
-
                   </tr>
-
                 </thead>
 
                 <tbody>
-
                   {(showActive
-                    ? reservations.filter(
-                        (r) =>
-                          r.status ===
-                          "Booked"
-                      )
+                    ? reservations.filter((r) => r.status === "Booked")
                     : reservations
                   ).map((item) => (
-
                     <tr key={item.id}>
-
                       <td className="px-5 py-[18px] text-[16px] text-[#4A4A4A] border border-[#E5E5E5] border-t-0">
                         {item.reservedBy}
                       </td>
@@ -383,28 +386,22 @@ export default function Reservations() {
 
                       <td
                         className={`px-5 py-[18px] border border-[#E5E5E5] border-t-0 ${
-                          item.status ===
-                          "Booked"
+                          item.status === "Booked"
                             ? "bg-[#EDF8EF]"
                             : "bg-[#FFF1F1]"
                         }`}
                       >
-
                         <div className="flex justify-center">
-
                           <span
                             className={`text-[16px] font-semibold ${
-                              item.status ===
-                              "Booked"
+                              item.status === "Booked"
                                 ? "text-[#008236]"
                                 : "text-[#D60000]"
                             }`}
                           >
                             {item.status}
                           </span>
-
                         </div>
-
                       </td>
 
                       <td className="px-5 py-[18px] text-[16px] text-[#4A4A4A] border border-[#E5E5E5] border-t-0">
@@ -412,53 +409,30 @@ export default function Reservations() {
                       </td>
 
                       <td className="px-5 py-[18px] border border-[#E5E5E5] border-t-0">
-
                         <div className="flex items-center justify-center gap-5">
-
                           <button
-                            onClick={() =>
-                              handleView(
-                                item
-                              )
-                            }
+                            onClick={() => handleView(item)}
                             className="text-[#C86F40]"
                           >
-                            <Eye
-                              size={22}
-                            />
+                            <Eye size={22} />
                           </button>
 
                           <button
-                            onClick={() =>
-                              handleDelete(
-                                item.id
-                              )
-                            }
+                            onClick={() => handleDelete(item.id)}
                             className="text-[#FF4B5C]"
                           >
-                            <Trash2
-                              size={22}
-                            />
+                            <Trash2 size={22} />
                           </button>
-
                         </div>
-
                       </td>
-
                     </tr>
-
                   ))}
-
                 </tbody>
-
               </table>
-
             </div>
-
           </div>
 
           <div className="mt-5">
-
             <Pagination
               currentPage={page}
               totalPages={10}
@@ -467,310 +441,212 @@ export default function Reservations() {
               endEntry={10}
               onPageChange={setPage}
             />
-
           </div>
-
         </div>
       ) : (
         <div className="z-10 relative">
-
           <div className="flex items-center gap-5">
-
-            <button
-              onClick={() =>
-                setShowDetails(
-                  false
-                )
-              }
-            >
-              <ArrowLeft
-                size={24}
-              />
+            <button onClick={() => setShowDetails(false)}>
+              <ArrowLeft size={24} />
             </button>
 
             <h1 className="text-[20px] font-semibold text-black">
-              {isEditable
-                ? "Edit Reservation Slots"
-                : "Reservation Details"}
+              {isEditable ? "Edit Reservation Slots" : "Reservation Details"}
             </h1>
-
           </div>
 
           <div className="mt-8 rounded-xl border border-[#D9D9D9] bg-white shadow-sm">
-
             <div className="relative p-5">
-
               <div className="sm:absolute sm:right-14 sm:top-[-25px] h-[50px] sm:min-w-[240px] w-fit px-5 rounded-lg bg-[#14A344] shadow-lg flex items-center justify-center">
-
                 <p className="text-white text-[18px] font-bold">
                   Status : Booked
                 </p>
-
               </div>
 
               {!isEditable && (
                 <button
-                  onClick={() =>
-                    setIsEditable(
-                      true
-                    )
-                  }
+                  onClick={() => setIsEditable(true)}
                   className="absolute sm:right-14 right-5 sm:top-16 top-5 text-[#C86F40]"
                 >
-                  <PenSquare
-                    size={42}
-                  />
+                  <PenSquare size={42} />
                 </button>
               )}
 
               <div className="lg:w-[400px] min-w-[200px] w-fit h-[60px] mt-5 sm:mt-0 rounded-tr-[2rem] bg-[#C86F40] flex items-center px-14">
-
                 <h2 className="text-white text-[24px] font-bold">
                   Reservation Details
                 </h2>
-
               </div>
 
               <div className="grid-cols-1 sm:grid-cols-2 gap-5 grid pt-14">
-
                 <div>
-
                   <label className="text-[18px] font-medium text-[#2B2B2B]">
                     Reserved By
                   </label>
 
                   <input
-                    value={
-                      formData.reservedBy
-                    }
+                    value={formData.reservedBy}
                     disabled
                     className="w-full h-[60px] rounded-lg border border-[#A7A7A7] bg-[#D9D9D9] px-5 mt-3 text-[16px] font-semibold text-[#7A2D00] outline-none"
                   />
-
                 </div>
 
                 <div>
-
                   <label className="text-[18px] font-medium text-[#2B2B2B]">
                     Phone Number
                   </label>
 
                   <input
-                    value={
-                      formData.phone
-                    }
+                    value={formData.phone}
                     disabled
                     className="w-full h-[60px] rounded-lg border border-[#A7A7A7] bg-[#D9D9D9] px-5 mt-3 text-[16px] font-semibold text-[#7A2D00] outline-none"
                   />
-
                 </div>
 
                 <div>
-
                   <label className="text-[18px] font-medium text-[#2B2B2B]">
                     Phone Number
                   </label>
 
                   <input
-                    value={
-                      formData.phone
-                    }
+                    value={formData.phone}
                     disabled
                     className="w-full h-[60px] rounded-lg border border-[#A7A7A7] bg-[#D9D9D9] px-5 mt-3 text-[16px] font-semibold text-[#7A2D00] outline-none"
                   />
-
                 </div>
 
                 <div>
-
                   <label className="text-[18px] font-medium text-[#2B2B2B]">
                     Booking Id
                   </label>
 
                   <input
-                    value={
-                      formData.reservationId
-                    }
+                    value={formData.reservationId}
                     disabled
                     className="w-full h-[60px] rounded-lg border border-[#A7A7A7] bg-[#D9D9D9] px-5 mt-3 text-[16px] font-semibold text-[#7A2D00] outline-none"
                   />
-
                 </div>
 
                 <div>
-
                   <label className="text-[18px] font-medium text-[#2B2B2B]">
                     Branch
                   </label>
 
                   <input
-                    value={
-                      formData.branch
-                    }
+                    value={formData.branch}
                     disabled
                     className="w-full h-[60px] rounded-lg border border-[#A7A7A7] bg-[#D9D9D9] px-5 mt-3 text-[16px] font-semibold text-black outline-none"
                   />
-
                 </div>
 
                 <div>
-
                   <label className="text-[18px] font-medium text-[#2B2B2B]">
                     No of Guests
                   </label>
 
                   <input
-                    value={
-                      formData.guests
-                    }
+                    value={formData.guests}
                     disabled
                     className="w-full h-[60px] rounded-lg border border-[#A7A7A7] bg-white px-8 mt-3 text-[18px] font-semibold text-black outline-none"
                   />
-
                 </div>
 
                 <div>
-
                   <label className="text-[18px] font-medium text-[#2B2B2B]">
                     Reserved On
                   </label>
 
                   <input
-                    value={
-                      formData.reservedOn
-                    }
-                    onChange={(e) =>
-                      handleChange(
-                        "reservedOn",
-                        e.target.value
-                      )
-                    }
-                    disabled={
-                      !isEditable
-                    }
+                    type="date"
+                    min={new Date().toISOString().split("T")[0]}
+                    value={formData.reservedOn}
+                    onChange={(e) => handleChange("reservedOn", e.target.value)}
+                    disabled={!isEditable}
                     className="w-full h-[60px] rounded-lg border border-[#A7A7A7] bg-white px-8 mt-3 text-[18px] font-semibold text-black outline-none"
                   />
-
                 </div>
 
                 <div>
-
                   <label className="text-[18px] font-medium text-[#2B2B2B]">
                     Date Of Visit
                   </label>
 
                   <input
-                    value={
-                      formData.visitDate
-                    }
-                    onChange={(e) =>
-                      handleChange(
-                        "visitDate",
-                        e.target.value
-                      )
-                    }
-                    disabled={
-                      !isEditable
-                    }
+                    type="date"
+                    value={formData.visitDate}
+                    min={new Date().toISOString().split("T")[0]}
+                    onChange={(e) => handleChange("visitDate", e.target.value)}
+                    disabled={!isEditable}
                     className="w-full h-[60px] rounded-lg border border-[#A7A7A7] bg-white px-8 mt-3 text-[18px] font-semibold text-black outline-none"
                   />
-
                 </div>
 
                 <div>
-
                   <label className="text-[18px] font-medium text-[#2B2B2B]">
                     Reserved For
                   </label>
 
                   <input
-                    value={
-                      formData.reservedFor
-                    }
-                    onChange={(e) =>
-                      handleChange(
-                        "reservedFor",
-                        e.target.value
-                      )
-                    }
-                    disabled={
-                      !isEditable
-                    }
-                    className="w-full h-[60px] rounded-lg border border-[#A7A7A7] bg-white px-8 mt-3 text-[18px] font-semibold text-black outline-none"
+                    value={formData.reservedFor}
+                    onClick={() => {
+                      if (isEditable) {
+                        setSlotModal(true);
+                      }
+                    }}
+                    readOnly
+                    disabled={!isEditable}
+                    placeholder="Select Slot"
+                    className="w-full h-[60px] rounded-lg border border-[#A7A7A7] bg-white px-8 mt-3 text-[18px] font-semibold text-black outline-none cursor-pointer"
                   />
-
                 </div>
 
                 <div>
-
                   <label className="text-[18px] font-medium text-[#2B2B2B]">
                     Time Slot
                   </label>
 
                   <input
-                    value={
-                      formData.timeSlot
-                    }
-                    onChange={(e) =>
-                      handleChange(
-                        "timeSlot",
-                        e.target.value
-                      )
-                    }
-                    disabled={
-                      !isEditable
-                    }
-                    className="w-full h-[60px] rounded-lg border border-[#A7A7A7] bg-white px-8 mt-3 text-[18px] font-semibold text-black outline-none"
+                    value={selectedSlot}
+                    readOnly
+                    onClick={() => setSlotTimeModal(true)}
+                    placeholder="Select Time Slot"
+                    disabled={!isEditable}
+                    className="w-full h-[60px] rounded-lg border border-[#A7A7A7] bg-white px-8 mt-3 text-[18px] font-semibold text-black outline-none cursor-pointer"
                   />
-
                 </div>
-
               </div>
 
               <div className="mt-12">
-
                 <div className="lg:w-[400px] min-w-[200px] w-fit h-[60px] rounded-tr-[2rem] bg-[#C86F40] flex items-center px-14">
-
                   <h2 className="text-white text-[24px] font-bold">
                     Hotel Details
                   </h2>
-
                 </div>
 
                 <div className="grid-cols-1 sm:grid-cols-2 gap-5 grid pt-14">
-
                   <div>
-
                     <label className="text-[18px] font-medium text-[#2B2B2B]">
                       Hotel Name
                     </label>
 
                     <input
-                      value={
-                        formData.hotelName
-                      }
+                      value={formData.hotelName}
                       disabled
                       className="w-full h-[60px] rounded-lg border border-[#A7A7A7] bg-[#D9D9D9] px-5 mt-3 text-[16px] font-semibold text-[#7A2D00] outline-none"
                     />
-
                   </div>
 
                   <div>
-
                     <label className="text-[18px] font-medium text-[#2B2B2B]">
                       Branch Manager:
                     </label>
 
                     <input
-                      value={
-                        formData.manager
-                      }
+                      value={formData.manager}
                       disabled
                       className="w-full h-[60px] rounded-lg border border-[#A7A7A7] bg-[#D9D9D9] px-5 mt-3 text-[16px] font-semibold text-[#7A2D00] outline-none"
                     />
-
                   </div>
-
                 </div>
 
                 <h2 className="text-[24px] font-semibold text-[#B7B7B7] mt-10">
@@ -778,99 +654,157 @@ export default function Reservations() {
                 </h2>
 
                 <div className="grid-cols-1 sm:grid-cols-2 gap-5 grid pt-8">
-
                   <div>
-
                     <label className="text-[18px] font-medium text-[#2B2B2B]">
                       Street Address
                     </label>
 
                     <input
-                      value={
-                        formData.street
-                      }
+                      value={formData.street}
                       disabled
                       className="w-full h-[60px] rounded-lg border border-[#A7A7A7] bg-[#D9D9D9] px-5 mt-3 text-[16px] font-semibold text-[#7A2D00] outline-none"
                     />
-
                   </div>
 
                   <div>
-
                     <label className="text-[18px] font-medium text-[#2B2B2B]">
                       City
                     </label>
 
                     <input
-                      value={
-                        formData.city
-                      }
+                      value={formData.city}
                       disabled
                       className="w-full h-[60px] rounded-lg border border-[#A7A7A7] bg-[#D9D9D9] px-5 mt-3 text-[16px] font-semibold text-[#7A2D00] outline-none"
                     />
-
                   </div>
 
                   <div>
-
                     <label className="text-[18px] font-medium text-[#2B2B2B]">
                       Zip
                     </label>
 
                     <input
-                      value={
-                        formData.zip
-                      }
+                      value={formData.zip}
                       disabled
                       className="w-full h-[60px] rounded-lg border border-[#A7A7A7] bg-[#D9D9D9] px-5 mt-3 text-[16px] font-semibold text-[#7A2D00] outline-none"
                     />
-
                   </div>
 
                   <div>
-
                     <label className="text-[18px] font-medium text-[#2B2B2B]">
                       Country
                     </label>
 
                     <input
-                      value={
-                        formData.country
-                      }
+                      value={formData.country}
                       disabled
                       className="w-full h-[60px] rounded-lg border border-[#A7A7A7] bg-[#D9D9D9] px-5 mt-3 text-[16px] font-semibold text-[#7A2D00] outline-none"
                     />
-
                   </div>
-
                 </div>
 
                 {isEditable && (
                   <div className="flex justify-center mt-16">
-
                     <CommonButton
-                      onClick={() =>
-                        setIsEditable(
-                          false
-                        )
-                      }
+                      onClick={() => setIsEditable(false)}
                       className="h-[60px]"
                     >
                       Save Changes
                     </CommonButton>
-
                   </div>
                 )}
-
               </div>
-
             </div>
-
           </div>
-
         </div>
       )}
+
+      <CommonModal
+        open={slotModal}
+        title="Select Slot"
+        onClose={() => setSlotModal(false)}
+        maxWidth="max-w-[460px]"
+      >
+        <div className="">
+          <div className="mt-5">
+            <h3 className="text-[16px] font-medium text-[#232323]">
+              Reserve for
+            </h3>
+
+            <div className="flex items-center gap-5 mt-2">
+              {slotOptions.map((item) => (
+                <button
+                  key={item}
+                  onClick={() => handleChange("reservedFor", item)}
+                  className={`flex-1 py-2 rounded-full border-[2px] text-[14px] font-bold transition-all ${
+                    formData.reservedFor === item
+                      ? "bg-[#C86F40] border-[#C86F40] text-white"
+                      : "border-[#666666] text-black bg-white"
+                  }`}
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
+
+            <button
+              onClick={() => setSlotModal(false)}
+              className="w-full py-2 rounded-lg bg-[#8B2E00] text-white text-[16px] font-bold mt-10"
+            >
+              Select the Slot
+            </button>
+          </div>
+        </div>
+      </CommonModal>
+
+      <CommonModal
+  open={slotTimeModal}
+  title="Select Time Slot"
+  onClose={() =>
+    setSlotTimeModal(false)
+  }
+  maxWidth="max-w-[460px]"
+>
+  <div className="mt-5">
+    {timeSlots.map((section) => (
+      <div
+        key={section.title}
+        className="mt-5 first:mt-0"
+      >
+        <h3 className="text-[16] font-semibold text-black">
+          {section.title}
+        </h3>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-5 mt-2">
+          {section.slots.map((item) => (
+            <button
+              key={item}
+              onClick={() =>
+                setSelectedSlot(item)
+              }
+              className={`py-2 px-3 rounded-full border text-[14] font-semibold transition-all ${
+                selectedSlot === item
+                  ? "bg-[#C86F40] border-[#C86F40] text-white"
+                  : "bg-white border-[#666666] text-black"
+              }`}
+            >
+              {item}
+            </button>
+          ))}
+        </div>
+      </div>
+    ))}
+
+    <button
+      onClick={() =>
+        setSlotTimeModal(false)
+      }
+      className="w-full py-2 rounded-lg bg-[#8B2E00] text-white text-[16] font-semibold mt-10"
+    >
+      Select the Slot
+    </button>
+  </div>
+</CommonModal>
     </div>
   );
 }
-
